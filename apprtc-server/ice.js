@@ -10,20 +10,20 @@ var hmac = function (key, content) {
   return method.read()
 }
 
-app.get('/iceconfig', function (req, resp) {
+app.use('/iceconfig', function (req, resp) {
   var query = req.query
-  var key = '4080218913'
+  var key = '4080218913' //key must be same as the static-auth-secret value in turnserver.conf
   var time_to_live = 600
   var timestamp = Math.floor(Date.now() / 1000) + time_to_live
-  var turn_username = timestamp + ':ninefingers'
+  var turn_username = timestamp + ':mytest' //mytest is realm name, see https://www.ietf.org/proceedings/87/slides/slides-87-behave-10.pdf
   var password = hmac(key, turn_username)
 
   return resp.send({
     iceServers: [
       {
         urls: [
-          'stun:ICE_SERVER_ADDR:3478',
-          'turn:ICE_SERVER_ADDR:3478'
+          'stun:39.105.194.195:3478',
+          'turn:39.105.194.195:3478'
         ],
         username: turn_username,
         credential: password

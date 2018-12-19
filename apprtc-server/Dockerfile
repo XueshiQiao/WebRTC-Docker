@@ -46,18 +46,23 @@ RUN wget http://turnserver.open-sys.org/downloads/v$COTURN_VER/turnserver-$COTUR
 RUN tar xvfz turnserver-$COTURN_VER.tar.gz
 WORKDIR turnserver-$COTURN_VER
 RUN ./configure && make && make install
-RUN turnadmin -a -u ninefingers -r apprtc -p youhavetoberealistic
+RUN turnadmin -a -u joey -p bluebluesky -r apprtc 
 COPY turnserver.conf /etc/turnserver.conf
 
 # AppRTC
 WORKDIR /
-RUN git clone https://github.com/webrtc/apprtc.git
+RUN git clone https://github.com/qiaoxueshi/apprtc.git
 
 WORKDIR apprtc
 
 RUN ln -s /apprtc/src/collider/collider $GOPATH/src
 RUN ln -s /apprtc/src/collider/collidermain $GOPATH/src
 RUN ln -s /apprtc/src/collider/collidertest $GOPATH/src
+
+# Install collidermain may failed in China because x/net may not be installed directly from Google repo successfully. So we install x/net from github mirror before collidermain
+RUN mkdir -p $GOPATH/src/golang.org/x/net
+RUN git clone https://github.com/golang/net.git $GOPATH/src/golang.org/x/net
+
 RUN go get collidermain
 RUN go install collidermain
 
@@ -70,7 +75,7 @@ RUN grunt build
 WORKDIR /
 
 RUN npm install express
-COPY ice.js /
+#COPY ice.js /
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -37,7 +37,7 @@ ICE_SERVER_OVERRIDE = None
 #   }
 # ]
 
-ICE_SERVER_BASE_URL = 'http://<server public IP>:3033'
+ICE_SERVER_BASE_URL = 'https://t.appcode.app/signal'
 ICE_SERVER_URL_TEMPLATE = '%s/iceconfig?key=%s'
 ICE_SERVER_API_KEY = os.environ.get('ICE_SERVER_API_KEY')
 
@@ -46,7 +46,8 @@ WSS_INSTANCE_HOST_KEY = 'host_port_pair'
 WSS_INSTANCE_NAME_KEY = 'vm_name'
 WSS_INSTANCE_ZONE_KEY = 'zone'
 WSS_INSTANCES = [{
-    WSS_INSTANCE_HOST_KEY: '<server public IP>:8089',
+#     WSS_INSTANCE_HOST_KEY: '39.105.194.195:8089',	    
+	WSS_INSTANCE_HOST_KEY: 't.appcode.app',
     WSS_INSTANCE_NAME_KEY: 'wsserver-std',
     WSS_INSTANCE_ZONE_KEY: 'us-central1-a'
 }]
@@ -81,3 +82,5 @@ BIGQUERY_DATASET_LOCAL = 'dev'
 
 # BigQuery table within the dataset.
 BIGQUERY_TABLE = 'analytics'
+
+HOST_URL = 'https://t.appcode.app'
